@@ -61,6 +61,12 @@ static const int kAlarmNoopInternalType = 103;
 static const int kAlarmNoopTimeOutType = 104;
 #endif
 
+#define TLS_KEYSHARE_CMD = 1 
+#define TLS_KEYSHARE_FINISHED = 2 
+#define TLS_CHANGECIPHER_SPEC_CMD = 3 
+#define TLS_CHANGECIPHER_SPEC_FINISHED = 4 
+#define TLS_0RTT_PSK_CMD = 5 
+
 namespace {
 class LongLinkConnectObserver : public MComplexConnect {
  public:
@@ -217,9 +223,21 @@ bool LongLink::Send(const AutoBuffer& _body, const AutoBuffer& _extension, const
 
     xassert2(tracker_.get());
 
-    lstsenddata_.push_back(std::make_pair(_task, move_wrapper<AutoBuffer>(AutoBuffer())));
-    Encoder().longlink_pack(_task.cmdid, _task.taskid, _body, _extension, lstsenddata_.back().second, tracker_.get());
-    lstsenddata_.back().second->Seek(0, AutoBuffer::ESeekStart);
+    // for tls handshake
+    if (ttl_connect_ != nullptr && (_task.cmdid >= 1 && _task_cmdid <= 4)) {
+    	tlssenddata_.push_back(std::make_pair(_task, move_wrapper<AutoBuffer>(AutoBuffer())));
+    	Encoder().longlink_pack(_task.cmdid, _task.taskid, _body, _extension, lstsenddata_.back().second, tracker_.get());
+    	tlssenddata_.back().second->Seek(0, AutoBuffer::ESeekStart);
+    // for tls data
+    } else if (ttl_connect_ != null && ttl_connect_->EncryptOK()) {
+    	lstsenddata_.push_back(std::make_pair(_task, move_wrapper<AutoBuffer>(AutoBuffer())));
+    	Encoder().longlink_pack(_task.cmdid, _task.taskid, _body, _extension, lstsenddata_.back().second, tracker_.get());
+    	lstsenddata_.back().second->Seek(0, AutoBuffer::ESeekStart);
+    } else {
+    	lstsenddata_.push_back(std::make_pair(_task, move_wrapper<AutoBuffer>(AutoBuffer())));
+    	Encoder().longlink_pack(_task.cmdid, _task.taskid, _body, _extension, lstsenddata_.back().second, tracker_.get());
+    	lstsenddata_.back().second->Seek(0, AutoBuffer::ESeekStart);
+    }
 
     conn_profile_.start_read_packet_time = 0;
     conn_profile_.start_connect_time = 0;
@@ -246,6 +264,7 @@ bool LongLink::SendWhenNoData(const AutoBuffer& _body,
     task.send_only = true;
     task.cmdid = _cmdid;
     task.taskid = _taskid;
+
     lstsenddata_.push_back(std::make_pair(task, move_wrapper<AutoBuffer>(AutoBuffer())));
     Encoder().longlink_pack(_cmdid, _taskid, _body, _extension, lstsenddata_.back().second, tracker_.get());
     lstsenddata_.back().second->Seek(0, AutoBuffer::ESeekStart);
@@ -763,6 +782,8 @@ SOCKET LongLink::__RunConnect(ConnectProfile& _conn_profile) {
 
     //    xerror2_if(0 != setsockopt(sock, SOL_SOCKET, SO_LINGER, (const char*)&so_linger, sizeof(so_linger)),
     //               TSF"SO_LINGER sock:%0, %1(%2)", sock, socket_errno, socket_strerror(socket_errno));
+ 
+    StartTls(sock); 
 
     return sock;
 }

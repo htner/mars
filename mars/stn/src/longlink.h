@@ -180,6 +180,8 @@ class LongLink {
     virtual void OnConnectHandshakeCompleted() {
     }
 
+    
+
  private:
     LongLink(const LongLink&);
     LongLink& operator=(const LongLink&);
@@ -229,13 +231,18 @@ class LongLink {
 
     comm::SocketBreaker readwritebreak_;
     LongLinkIdentifyChecker identifychecker_;
+
     std::list<std::pair<Task, move_wrapper<AutoBuffer>>> lstsenddata_;
+    std::list<std::pair<Task, move_wrapper<AutoBuffer>>> tlssenddata_;
+
     tickcount_t lastrecvtime_;
     comm::Alarm alarmnooptimeout_;
     bool isnooping_ = false;
 
     SmartHeartbeat* smartheartbeat_ = nullptr;
     comm::WakeUpLock* wakelock_ = nullptr;
+
+    TTLConnect* ttl_connect_ = nullptr;
 
     LongLinkEncoder& encoder_;
     unsigned long long lastheartbeat_;
