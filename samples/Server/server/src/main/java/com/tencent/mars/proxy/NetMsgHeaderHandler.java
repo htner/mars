@@ -16,12 +16,13 @@ package com.tencent.mars.proxy;
 
 import com.tencent.mars.logicserver.ProxySession;
 import com.tencent.mars.logicserver.TopicChats;
-import com.tencent.mars.sample.chat.proto.Chat;
+import com.tencent.mars.sample.proto.Chat;
 import com.tencent.mars.sample.proto.Main;
 import com.tencent.mars.utils.LogUtils;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.glassfish.jersey.client.ClientConfig;
 
 import java.io.ByteArrayInputStream;
@@ -48,7 +49,7 @@ import io.netty.util.ReferenceCountUtil;
  */
 public class NetMsgHeaderHandler extends ChannelInboundHandlerAdapter {
 
-    public static Logger logger = Logger.getLogger(NetMsgHeaderHandler.class.getName());
+    public static Logger logger = LogManager.getLogger(NetMsgHeaderHandler.class.getName());
 
     private static Map<Integer, String> CMD_PATH_MAP = new HashMap<>();
 

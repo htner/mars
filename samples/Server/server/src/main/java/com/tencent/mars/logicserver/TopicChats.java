@@ -15,10 +15,11 @@
 package com.tencent.mars.logicserver;
 
 import com.tencent.mars.proxy.NetMsgHeader;
-import com.tencent.mars.sample.chat.proto.Messagepush;
+import com.tencent.mars.sample.proto.Messagepush;
 import com.tencent.mars.utils.BaseConstants;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -30,7 +31,7 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class TopicChats {
 
-    public static Logger logger = Logger.getLogger(TopicChats.class.getName());
+    public static Logger logger = LogManager.getLogger(TopicChats.class.getName());
 
     private String[][] conDetails = new String[][]{
             new String[] {"Mars", "0", "STN Discuss"},

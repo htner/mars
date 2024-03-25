@@ -18,7 +18,8 @@ package com.tencent.mars.webserver;
 import com.tencent.mars.sample.proto.Main;
 import com.tencent.mars.utils.LogUtils;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -34,7 +35,7 @@ import java.io.OutputStream;
 @Path("/mars/hello")
 public class EchoCgi {
 
-    Logger logger = Logger.getLogger(EchoCgi.class.getName());
+    Logger logger = LogManager.getLogger(EchoCgi.class.getName());
 
     @POST()
     @Consumes("application/octet-stream")

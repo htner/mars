@@ -17,7 +17,8 @@ package com.tencent.mars.proxy;
 import com.tencent.mars.datacenter.CacheData;
 import com.tencent.mars.logicserver.ProxySession;
 
-import org.apache.log4j.PropertyConfigurator;
+// import org.apache.log4j.PropertyConfigurator;
+// import org.apache.logging.log4j.core.LoggerContext;
 
 import java.util.Properties;
 
@@ -41,6 +42,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class ProxyServer {
 
     static {
+        /*
         Properties pro = new Properties();
         pro.put("log4j.rootLogger", "DEBUG,stdout,R");
 
@@ -56,6 +58,7 @@ public class ProxyServer {
         pro.put("log4j.appender.R.layout.ConversionPattern", "[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n");
 
         PropertyConfigurator.configure(pro);
+        */
     }
 
 

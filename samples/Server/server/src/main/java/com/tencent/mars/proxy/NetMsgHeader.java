@@ -16,7 +16,8 @@ package com.tencent.mars.proxy;
 
 import com.tencent.mars.utils.LogUtils;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -29,7 +30,7 @@ import java.io.InputStream;
  */
 public class NetMsgHeader {
 
-    public static Logger logger = Logger.getLogger(NetMsgHeader.class.getName());
+    public static Logger logger = LogManager.getLogger(NetMsgHeader.class.getName());
 
     private static final int FIXED_HEADER_SKIP = 4 + 4 + 4 + 4 + 4;
 

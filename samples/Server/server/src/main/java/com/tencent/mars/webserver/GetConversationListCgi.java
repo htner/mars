@@ -17,8 +17,9 @@ package com.tencent.mars.webserver;
 import com.tencent.mars.sample.proto.Main;
 import com.tencent.mars.utils.LogUtils;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+// import org.apache.logging.log4j.PropertyConfigurator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,10 +54,10 @@ public class GetConversationListCgi {
         pro.put("log4j.appender.R.layout", "org.apache.log4j.PatternLayout");
         pro.put("log4j.appender.R.layout.ConversionPattern", "[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n");
 
-        PropertyConfigurator.configure(pro);
+        //PropertyConfigurator.configure(pro);
     }
 
-    Logger logger = Logger.getLogger(GetConversationListCgi.class.getName());
+    Logger logger = LogManager.getLogger(GetConversationListCgi.class.getName());
 
     private String[][] conDetails = new String[][]{
             new String[] {"Mars", "0", "STN Discuss"},

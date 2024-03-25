@@ -6,14 +6,11 @@ version rootProject.ext.VERSION_NAME
 group "com.tencent.mars"
 artifactId = "mars-wrapper"
 android {
-    compileSdkVersion 31
-    buildToolsVersion '30.0.2'
+    compileSdkVersion 34
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 31
     }
     buildTypes {
         release {
@@ -26,7 +23,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.google.protobuf:protobuf-lite:3.0.0'
+    implementation 'com.google.protobuf:protobuf-javalite:3.17.3'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation "com.tencent.mars:mars-core:${VERSION_NAME}"
+    api project(':mars')
 }

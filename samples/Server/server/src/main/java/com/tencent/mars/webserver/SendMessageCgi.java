@@ -14,10 +14,11 @@
 
 package com.tencent.mars.webserver;
 
-import com.tencent.mars.sample.chat.proto.Chat;
+import com.tencent.mars.sample.proto.Chat;
 import com.tencent.mars.utils.LogUtils;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +35,7 @@ import javax.ws.rs.core.StreamingOutput;
 @Path("/mars/sendmessage")
 public class SendMessageCgi {
 
-    Logger logger = Logger.getLogger(SendMessageCgi.class.getName());
+    Logger logger = LogManager.getLogger(SendMessageCgi.class.getName());
 
     @POST()
     @Consumes("application/octet-stream")
